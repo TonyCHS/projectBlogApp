@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   title: {
-    fontSize: 36,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 24,
   },
@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   logo: {
-    width: 500,
-    height: 280,
+    width: 250,
+    height: 140,
     alignSelf: "center",
     marginTop: 20,
     marginBottom: 20,
