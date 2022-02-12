@@ -6,6 +6,7 @@ import {
   Switch,
   Text,
   View,
+  FlatList,
 } from "react-native";
 import { commonStyles } from "../styles/commonStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,6 +14,29 @@ import { useUsername } from "../hooks/useAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { signOutAction } from "../redux/ducks/blogAuth";
 import { toggleDarkMode } from "../redux/ducks/accountPrefs";
+import colors from "../config/colors";
+import Icon from "../components/Icon";
+import Screen from "../components/Screen";
+import { ListItem, ListItemSeparator } from "../components/lists";
+
+const menuItems = [
+  {
+    title: "Settings",
+    icon: {
+      name: "format-list-bulleted",
+      backgroundColor: colors.primary,
+    },
+    // targetScreen: routes.SETTINGS,
+  },
+  {
+    title: "My Messages",
+    icon: {
+      name: "email",
+      backgroundColor: colors.secondary,
+    },
+    // targetScreen: routes.MESSAGES,
+  },
+];
 
 export default function AccountScreen({ navigation }) {
   const [username, loading, error, refresh] = useUsername();
@@ -40,34 +64,86 @@ export default function AccountScreen({ navigation }) {
   }
 
   return (
-    <View
-      style={[
-        commonStyles.container,
-        isDarkModeOn && { backgroundColor: "black" },
-      ]}
-    >
-      <Text style={[styles.titleText, isDarkModeOn && { color: "white" }]}>
-        Account Screen
-      </Text>
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <Text style={styles.usernameText}>{username}</Text>
-      )}
-      <View style={styles.horizontalBlock}>
-        <Text style={isDarkModeOn && { color: "white" }}>Dark mode</Text>
+    <Screen style={styles.screen}>
+      <View
+        style={[
+          // commonStyles.container,
+          styles.container,
+          isDarkModeOn && { backgroundColor: "black" },
+        ]}
+      >
+        <Text
+          style={[styles.titleText, isDarkModeOn && { color: "white" }]}
+        ></Text>
+
+        <View style={styles.container}>
+          <ListItem
+            title={
+              loading ? (
+                <ActivityIndicator />
+              ) : (
+                <Text style={styles.usernameText}>{username}</Text>
+              )
+            }
+            image={require("../assets/profile.png")}
+          />
+        </View>
+        <View style={styles.container}>
+          <FlatList
+            data={menuItems}
+            keyExtractor={(menuItem) => menuItem.title}
+            ItemSeparatorComponent={ListItemSeparator}
+            renderItem={({ item }) => (
+              <ListItem
+                title={item.title}
+                IconComponent={
+                  <Icon
+                    name={item.icon.name}
+                    backgroundColor={item.icon.backgroundColor}
+                  />
+                }
+              />
+            )}
+          />
+        </View>
+
+        <ListItem
+          style={styles.usernameText}
+          title="Sign out"
+          IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
+          onPress={signOut}
+        />
+        {/* <Button title="Sign out" onPress={signOut} /> */}
+      </View>
+
+      <View
+        style={[
+          styles.horizontalBlock,
+          // commonStyles.container,
+          isDarkModeOn && { backgroundColor: "black" },
+        ]}
+      >
+        <Text style={isDarkModeOn && { color: "white" }}>Dark mode </Text>
         <Switch
           value={isDarkModeOn}
           onValueChange={() => dispatch(toggleDarkMode())}
         />
+        <Text style={isDarkModeOn && { color: "white" }}>
+          {" "}
+          {isDarkModeOn ? " On" : " Off"}
+        </Text>
       </View>
-      <Text> {isDarkModeOn ? "DARK MODE ON" : "DARK MODE OFF"}</Text>
-      <Button title="Sign out" onPress={signOut} />
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.light,
+  },
+  container: {
+    marginVertical: 20,
+  },
   titleText: {
     fontSize: 24,
     fontWeight: "bold",
@@ -80,8 +156,11 @@ const styles = StyleSheet.create({
   },
   horizontalBlock: {
     alignItems: "center",
-    justifyContent: "space-between",
-    width: "40%",
+    justifyContent: "center",
+    // justifyContent: "space-between",
+    // width: "40%",
     flexDirection: "row",
+    padding: 30,
+    marginTop: 50,
   },
 });
