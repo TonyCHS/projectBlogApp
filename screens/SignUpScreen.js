@@ -1,13 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { commonStyles } from "../styles/commonStyles";
+import { StyleSheet } from "react-native";
+import SignInSignUpView from "../components/SignInSignUpView";
 
 export default function SignUpScreen({ navigation }) {
-  return (
-    <View style={commonStyles.container}>
-      <Text>Sign Up Screen</Text>
-    </View>
-  );
+  return <SignInSignUpView navigation={navigation} isSignIn={false} />;
 }
 
 const styles = StyleSheet.create({});
