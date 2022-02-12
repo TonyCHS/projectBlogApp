@@ -72,9 +72,9 @@ export default function AccountScreen({ navigation }) {
           isDarkModeOn && { backgroundColor: "black" },
         ]}
       >
-        <Text
+        {/* <Text
           style={[styles.titleText, isDarkModeOn && { color: "white" }]}
-        ></Text>
+        ></Text> */}
 
         <View style={styles.container}>
           <ListItem
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
   },
   container: {
-    marginVertical: 20,
+    marginVertical: 10,
   },
   titleText: {
     fontSize: 24,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     // justifyContent: "space-between",
     // width: "40%",
     flexDirection: "row",
-    padding: 30,
-    marginTop: 50,
+    padding: 20,
+    marginTop: 10,
   },
 });

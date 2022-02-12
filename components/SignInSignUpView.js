@@ -105,7 +105,7 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
         </TouchableOpacity>
 
         <Text style={styles.errorText}>{errorText}</Text>
-        <View style={{ height: 20, alignItems: "left" }}></View>
+        <View style={{ height: 20, alignItems: "center" }}></View>
       </View>
     </TouchableWithoutFeedback>
   );
