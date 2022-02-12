@@ -6,7 +6,7 @@ export default {
   colors,
   text: {
     color: colors.dark,
-    fontSize: 20,
+    fontSize: 25,
     // fontFamily: "SnowburstOne_400Regular",
   },
 };

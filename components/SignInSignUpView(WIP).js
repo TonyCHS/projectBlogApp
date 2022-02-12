@@ -26,7 +26,7 @@ import {
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(1).label("Username"),
-  password: Yup.number().required().min(4).max(50).label("Password"),
+  password: Yup.string().required().min(4).max(40).label("Password"),
 });
 
 export default function SignInSignUpView({ navigation, isSignIn }) {
@@ -47,49 +47,49 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <Screen style={styles.container}>
         <Image style={styles.logo} source={require("../assets/logo.png")} />
 
         <Text style={styles.title}>
           {isSignIn ? "Sign In to Your Account" : "Sign up"}
         </Text>
 
-        <Text style={styles.fieldTitle}>Username</Text>
-        {/* <SnowburstOne_400Regular name="human-greeting" /> */}
-
-        <TextInput
-          style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={username}
-          onChangeText={(input) => setUsername(input)}
-        />
-
-        <Text style={styles.fieldTitle}>Password</Text>
-
-        <TextInput
-          style={styles.input}
-          autoCapitalize="none"
-          autoCompleteType="password"
-          autoCorrect={false}
-          secureTextEntry={true}
-          value={password}
-          onChangeText={(input) => setPassword(input)}
-        />
-
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
+        <Form
+          initialValues={{ username: "", password: "" }}
+          onSubmit={(values) => console.log(values)}
+          validationSchema={validationSchema}
+        >
+          <FormField
+            maxLength={100}
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="human-greeting"
+            name="username"
+            value={username}
+            placeholder="Username"
+            onChangeText={(input) => setUsername(input)}
+          />
+          <FormField
+            maxLength={50}
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="password"
+            value={password}
+            placeholder="Password"
+            secureTextEntry={true}
+            textContentType="password"
+            onChangeText={(input) => setPassword(input)}
+          />
+          <SubmitButton
             onPress={isSignIn ? login : signup}
-            style={styles.loginButton}
-          >
-            <Text style={styles.buttonText}>
-              {isSignIn ? "Sign in" : "Sign up"}
-            </Text>
-          </TouchableOpacity>
+            title={isSignIn ? "Sign in" : "Sign up"}
+          />
+
           {loading ? (
             <ActivityIndicator style={{ marginLeft: 20, marginBottom: 20 }} /> // adjust
           ) : null}
-        </View>
+        </Form>
 
         <TouchableOpacity
           onPress={() => {
@@ -106,8 +106,61 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
 
         <Text style={styles.errorText}>{errorText}</Text>
         <View style={{ height: 20, alignItems: "left" }}></View>
-      </View>
+      </Screen>
     </TouchableWithoutFeedback>
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    //   <View style={styles.container}>
+    //     <Text style={styles.title}>
+    //       {isSignIn ? "Sign In to Your Account" : "Sign up"}
+    //     </Text>
+    //     <Text style={styles.fieldTitle}>Username</Text>
+    //     <TextInput
+    //       style={styles.input}
+    //       autoCapitalize="none"
+    //       autoCorrect={false}
+    //       value={username}
+    //       onChangeText={(input) => setUsername(input)}
+    //     />
+    //     <Text style={styles.fieldTitle}>Password</Text>
+    //     <TextInput
+    //       style={styles.input}
+    //       autoCapitalize="none"
+    //       autoCompleteType="password"
+    //       autoCorrect={false}
+    //       secureTextEntry={true}
+    //       value={password}
+    //       onChangeText={(input) => setPassword(input)}
+    //     />
+    //     <View style={{ flexDirection: "row" }}>
+    // <TouchableOpacity
+    //   onPress={isSignIn ? login : signup}
+    //   style={styles.loginButton}
+    // >
+    //         <Text style={styles.buttonText}>
+    //           {isSignIn ? "Sign in" : "Sign up"}
+    //         </Text>
+    //       </TouchableOpacity>
+    //       {loading ? (
+    //         <ActivityIndicator style={{ marginLeft: 20, marginBottom: 20 }} /> // adjust
+    //       ) : null}
+    //     </View>
+    // <TouchableOpacity
+    //   onPress={() => {
+    //     navigation.navigate(isSignIn ? "SignUp" : "SignIn");
+    //   }}
+    //   style={styles.switchButton}
+    // >
+    //   <Text style={styles.switchText}>
+    //     {isSignIn
+    //       ? "Don't have an account? Sign up here."
+    //       : "Already have an account? Sign in here."}
+    //   </Text>
+    // </TouchableOpacity>
+
+    //     <Text style={styles.errorText}>{errorText}</Text>
+    //     <View style={{ height: 20, alignItems: "left" }}></View>
+    //   </View>
+    // </TouchableWithoutFeedback>
   );
 }
 
