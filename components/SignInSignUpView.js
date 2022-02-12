@@ -30,7 +30,7 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.title}>
-          {isSignIn ? "Log in to blog" : "Sign up for an account"}
+          {isSignIn ? "Sign In to Your Account" : "Sign up"}
         </Text>
         <Text style={styles.fieldTitle}>Username</Text>
         <TextInput
@@ -56,7 +56,7 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
             style={styles.loginButton}
           >
             <Text style={styles.buttonText}>
-              {isSignIn ? "Log in" : "Sign up"}
+              {isSignIn ? "Sign in" : "Sign up"}
             </Text>
           </TouchableOpacity>
           {loading ? (
@@ -71,8 +71,8 @@ export default function SignInSignUpView({ navigation, isSignIn }) {
         >
           <Text style={styles.switchText}>
             {isSignIn
-              ? "Register for a new account"
-              : "Have an account? Sign in"}
+              ? "Don't have an account? Sign up here."
+              : "Already have an account? Sign in here."}
           </Text>
         </TouchableOpacity>
 
